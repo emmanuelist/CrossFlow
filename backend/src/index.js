@@ -28,3 +28,8 @@ app.use('/api/rates', rateRoutes);
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+// Add this route to src/index.js
+app.get('/', (req, res) => {
+  res.json({ message: 'Welcome to the Cross-Chain Payment API' });
+});
