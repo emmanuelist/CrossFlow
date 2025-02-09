@@ -1,13 +1,29 @@
 const axios = require('axios');
 
-// African Fiat Currencies (NGN, KES, ZAR)
 async function getExchangeRate(fromCurrency, toCurrency = 'USDC') {
-  const response = await axios.get('https://api.flutterwave.com/v3/forex', {
-    headers: { Authorization: `Bearer ${process.env.FLUTTERWAVE_SECRET_KEY}` },
-    params: { from: fromCurrency, to: 'USD', amount: 1 } // Convert to USD first
-  });
+    try {
+        // Fetch fiat to USD rate from Flutterwave
+        const fiatToUsdResponse = await axios.get('https://api.flutterwave.com/v3/forex', {
+            headers: { Authorization: `Bearer ${process.env.FLUTTERWAVE_SECRET_KEY}` },
+            params: { from: fromCurrency, to: 'USD', amount: 1 },
+        });
 
-  const usdRate = response.data.data.rate;
-  const usdcRate = 1 / usdRate; // Assuming 1 USDC = 1 USD
-  return usdcRate.toFixed(4);
+        const usdRate = fiatToUsdResponse.data.data.rate;
+
+        // Fetch USDC to USD rate from CoinGecko
+        const usdcToUsdResponse = await axios.get('https://api.coingecko.com/api/v3/simple/price', {
+            params: { ids: 'usd-coin', vs_currencies: 'usd' },
+        });
+
+        const usdcRate = usdcToUsdResponse.data['usd-coin'].usd;
+
+        // Calculate final rate
+        const finalRate = usdRate * usdcRate;
+        return finalRate.toFixed(4);
+    } catch (error) {
+        console.error('Exchange rate error:', error);
+        throw new Error('Failed to fetch exchange rate');
+    }
 }
+
+module.exports = { getExchangeRate };
