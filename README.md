@@ -1,12 +1,10 @@
-# Cross-Chain USDC Bridge
+# CrossFlow USDC Bridge
 
 A decentralized bridge for transferring USDC between Ethereum and Stellar networks, with integrated fiat on/off ramps for African currencies.
 
-![Bridge Architecture](https://res.cloudinary.com/djp3vatc1/image/upload/v1/bridge-architecture.png)
-
 ## Features
 
-- 🌉 Cross-chain USDC transfers between Ethereum and Stellar
+- 🌉 CrossFlow USDC transfers between Ethereum and Stellar
 - 💱 Fiat on/off ramps supporting multiple African currencies
 - 📱 Mobile money and USSD integration
 - 🔒 Secure wallet management
@@ -49,7 +47,7 @@ AT_API_KEY=YOUR_AFRICASTALKING_KEY
 
 ### Backend Services
 
-- **Bridge Service**: Manages cross-chain transfers using Connext protocol
+- **Bridge Service**: Manages CrossFlow transfers using Connext protocol
 - **Rate Service**: Real-time exchange rates for African currencies
 - **Blockchain Services**: Ethereum and Stellar transaction handling
 - **USSD Service**: Mobile money integration via Africa's Talking
@@ -57,7 +55,7 @@ AT_API_KEY=YOUR_AFRICASTALKING_KEY
 ### Frontend Components
 
 - **Wallet Dashboard**: Balance management and network selection
-- **Bridge Interface**: Cross-chain transfer initiation
+- **Bridge Interface**: CrossFlow transfer initiation
 - **Transaction Monitor**: Real-time status tracking
 - **Payment Forms**: Fiat deposit/withdrawal interfaces
 
