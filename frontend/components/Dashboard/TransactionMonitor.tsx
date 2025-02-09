@@ -65,10 +65,10 @@
 
 //                         // If status changed to completed, show toast
 //                         if (newStatus === 'completed' && tx.status !== 'completed') {
-//                             toast.success(Transaction ${tx.txId.slice(0, 6)}...${tx.txId.slice(-4)} has been completed.,
+//                             toast.success(`Transaction ${tx.txId.slice(0, 6)}...${tx.txId.slice(-4)} has been completed.`,
 //                             );
 //                         } else if (newStatus === 'failed' && tx.status !== 'failed') {
-//                             toast.error(Transaction ${tx.txId.slice(0, 6)}...${tx.txId.slice(-4)} has failed.,
+//                             toast.error(`Transaction ${tx.txId.slice(0, 6)}...${tx.txId.slice(-4)} has failed.`,
 //                             );
 //                         }
 
@@ -77,7 +77,7 @@
 //                             status: newStatus
 //                         };
 //                     } catch (error) {
-//                         console.error(Error updating transaction ${tx.txId}:, error);
+//                         console.error(`Error updating transaction ${tx.txId}:`, error);
 //                         return tx;
 //                     }
 //                 })
@@ -120,7 +120,7 @@
 //     };
 
 //     const formatAddress = (address: string) => {
-//         return ${address.slice(0, 6)}...${address.slice(-4)};
+//         return `${address.slice(0, 6)}...${address.slice(-4)}`;
 //     };
 
 //     return (
@@ -280,10 +280,10 @@ export const TransactionMonitor = ({ walletService }: TransactionMonitorProps) =
 
                         // If status changed to completed, show toast
                         if (newStatus === 'completed' && tx.status !== 'completed') {
-                            toast.success(Transaction ${tx.txId.slice(0, 6)}...${tx.txId.slice(-4)} has been completed.
+                            toast.success(`Transaction ${tx.txId.slice(0, 6)}...${tx.txId.slice(-4)} has been completed.`
                             );
                         } else if (newStatus === 'failed' && tx.status !== 'failed') {
-                            toast.error(Transaction ${tx.txId.slice(0, 6)}...${tx.txId.slice(-4)} has failed.,
+                            toast.error(`Transaction ${tx.txId.slice(0, 6)}...${tx.txId.slice(-4)} has failed.`,
                             );
                         }
 
@@ -292,7 +292,7 @@ export const TransactionMonitor = ({ walletService }: TransactionMonitorProps) =
                             status: newStatus
                         };
                     } catch (error) {
-                        console.error(Error updating transaction ${tx.txId}:, error);
+                        console.error(`Error updating transaction ${tx.txId}:`, error);
                         return tx;
                     }
                 })
@@ -335,7 +335,7 @@ export const TransactionMonitor = ({ walletService }: TransactionMonitorProps) =
     };
 
     const formatAddress = (address: string) => {
-        return ${address.slice(0, 6)}...${address.slice(-4)};
+        return `${address.slice(0, 6)}...${address.slice(-4)}`;
     };
 
     return (
