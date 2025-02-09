@@ -5,7 +5,7 @@ import { useWallet } from "@/hooks/useWallet";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { AlertTriangle } from 'lucide-react';
-import { SecurityCheck } from '@/components/Dashboard/SecurityCheck';
+//import { SecurityCheck } from '@/components/Dashboard/SecurityCheck';
 import WalletDashboard from '@/components/Dashboard/WalletDashboard';
 import { TransactionMonitor } from '@/components/Dashboard/TransactionMonitor';
 import SendForm from '@/components/Dashboard/SendForm';
@@ -33,10 +33,10 @@ const Dashboard = () => {
         <div className="min-h-screen bg-gray-50 py-16">
             <div className="container mx-auto px-4 py-8">
                 {/* Security Status */}
-                <main className="mb-5">
+                {/* <main className="mb-5">
                     <SecurityCheck />
 
-                </main>
+                </main> */}
 
                 {/* Wallet Dashboard */}
                 <WalletDashboard
