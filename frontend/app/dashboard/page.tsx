@@ -1,125 +1,164 @@
 "use client"
 
-import { useWallet } from "@/hooks/useWallet";
+import React from 'react';
+import { motion } from 'framer-motion';
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
-import { AlertTriangle } from 'lucide-react';
-//import { SecurityCheck } from '@/components/Dashboard/SecurityCheck';
-import WalletDashboard from '@/components/Dashboard/WalletDashboard';
-import { TransactionMonitor } from '@/components/Dashboard/TransactionMonitor';
-import SendForm from '@/components/Dashboard/SendForm';
-import { NetworkGuide } from '@/components/Dashboard/NetworkGuide';
-import DepositForm from '@/components/Dashboard/DepositForm';
-import { DepositMethods } from '@/components/Dashboard/DepositMethods';
-import WithdrawForm from '@/components/Dashboard/WithdrawForm';
-import { BridgeInfo } from '@/components/Dashboard/BridgeInfo';
-import SwapForm from '@/components/Dashboard/SwapForm';
-import { WithdrawalInfo } from '@/components/Dashboard/WithdrawalInfo';
+import { ArrowRightLeft, PiggyBank, Users, Wallet } from 'lucide-react';
+import StatCard from '@/components/Dashboard2/StatCard';
+import BalanceOverviewCard from '@/components/Dashboard2/BalanceOverviewCard';
+import RecentTransactionsCard from '@/components/Dashboard2/RecentTransactionsCard';
+import QuickTransferCard from '@/components/Dashboard2/QuickTransferCard';
+import CurrencyRatesCard from '@/components/Dashboard2/CurrencyRatesCard';
+import ActivityCard from '@/components/Dashboard2/ActivityCard';
+import DashboardLayout from '@/components/Dashboard2/DashboardLayout';
 
-const Dashboard = () => {
-    const {
-        ethereumAccount,
-        stellarAccount,
-        connectEthereum,
-        connectStellar,
-        loading,
-        disconnectEthereum,
-        disconnectStellar,
-        walletService
-    } = useWallet();
+const Dashboard: React.FC = () => {
+    const container = {
+        hidden: { opacity: 0 },
+        show: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.1
+            }
+        }
+    };
+
+    const item = {
+        hidden: { opacity: 0, y: 20 },
+        show: { opacity: 1, y: 0 }
+    };
 
     return (
-        <div className="min-h-screen bg-gray-50 py-16">
-            <div className="container mx-auto px-4 py-8">
-                {/* Security Status */}
-                {/* <main className="mb-5">
-                    <SecurityCheck />
+        <DashboardLayout>
+            <div className="space-y-6">
+                {/* Page Header */}
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
+                    <div>
+                        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+                            Welcome back, Jane
+                        </h1>
+                        <p className="text-gray-600 dark:text-gray-400">
+                            Here's what's happening with your account today.
+                        </p>
+                    </div>
 
-                </main> */}
-
-                {/* Wallet Dashboard */}
-                <WalletDashboard
-                    ethereumAccount={ethereumAccount}
-                    loading={loading}
-                    stellarAccount={stellarAccount}
-                    onConnectEthereum={connectEthereum}
-                    onConnectStellar={connectStellar}
-                    onDisconnectEthereum={disconnectEthereum}
-                    onDisconnectStellar={disconnectStellar}
-                />
-
-                {/* Transaction Monitor */}
-                <div className="mt-6">
-                    <TransactionMonitor walletService={walletService} />
+                    <div className="flex space-x-2 mt-4 md:mt-0">
+                        <button className="px-4 py-2 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 text-sm font-medium text-gray-800 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                            Export
+                        </button>
+                        <button className="px-4 py-2 bg-gradient-to-r from-rose-500 to-cyan-500 hover:from-rose-600 hover:to-cyan-600 rounded-lg text-sm font-medium text-white transition-colors">
+                            New Transfer
+                        </button>
+                    </div>
                 </div>
 
-                {/* Main Operations */}
-                <Tabs defaultValue="send" className="mt-6">
-                    <TabsList className="grid w-full grid-cols-4">
-                        <TabsTrigger value="send">Send</TabsTrigger>
-                        <TabsTrigger value="deposit">Deposit</TabsTrigger>
-                        <TabsTrigger value="withdraw">Withdraw</TabsTrigger>
-                        <TabsTrigger value="swap">Swap</TabsTrigger>
-                    </TabsList>
+                {/* Stats Cards */}
+                <motion.div
+                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
+                    variants={container}
+                    initial="hidden"
+                    animate="show"
+                >
+                    <motion.div variants={item}>
+                        <StatCard
+                            title="Total Balance"
+                            value="$5,240.50"
+                            change="+12.5%"
+                            trend="up"
+                            icon={<Wallet className="h-5 w-5 text-rose-500" />}
+                            bgClass="bg-gradient-to-br from-rose-50 to-cyan-50 dark:from-rose-950/30 dark:to-cyan-950/30"
+                        />
+                    </motion.div>
 
-                    <TabsContent value="send">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            {ethereumAccount && stellarAccount ? (
-                                <>
-                                    <SendForm
-                                        ethereumAccount={ethereumAccount}
-                                        stellarAccount={stellarAccount}
-                                        walletService={walletService}
-                                    />
-                                    <NetworkGuide />
-                                </>
-                            ) : (
-                                <Alert>
-                                    <AlertTriangle className="h-4 w-4" />
-                                    <AlertTitle>Wallet Required</AlertTitle>
-                                    <AlertDescription>
-                                        Please connect both Ethereum and Stellar wallets to perform transfers
-                                    </AlertDescription>
-                                </Alert>
-                            )}
-                        </div>
-                    </TabsContent>
+                    <motion.div variants={item}>
+                        <StatCard
+                            title="Total Transfers"
+                            value="245"
+                            change="+8.2%"
+                            trend="up"
+                            icon={<ArrowRightLeft className="h-5 w-5 text-cyan-500" />}
+                            bgClass="bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-950/30 dark:to-blue-950/30"
+                        />
+                    </motion.div>
 
-                    <TabsContent value="deposit">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <DepositForm
-                                walletService={walletService}
-                                ethereumAccount={ethereumAccount}
-                            />
-                            <DepositMethods />
-                        </div>
-                    </TabsContent>
+                    <motion.div variants={item}>
+                        <StatCard
+                            title="Active Wallets"
+                            value="4"
+                            change="0%"
+                            trend="neutral"
+                            icon={<PiggyBank className="h-5 w-5 text-amber-500" />}
+                            bgClass="bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-950/30 dark:to-yellow-950/30"
+                        />
+                    </motion.div>
 
-                    <TabsContent value="withdraw">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <WithdrawForm
-                                walletService={walletService}
-                                ethereumAccount={ethereumAccount}
-                                stellarAccount={stellarAccount}
-                            />
-                            <WithdrawalInfo />
-                        </div>
-                    </TabsContent>
+                    <motion.div variants={item}>
+                        <StatCard
+                            title="Saved Recipients"
+                            value="12"
+                            change="+2"
+                            trend="up"
+                            icon={<Users className="h-5 w-5 text-violet-500" />}
+                            bgClass="bg-gradient-to-br from-violet-50 to-purple-50 dark:from-violet-950/30 dark:to-purple-950/30"
+                        />
+                    </motion.div>
+                </motion.div>
 
-                    <TabsContent value="swap">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <SwapForm
-                                walletService={walletService}
-                                ethereumAccount={ethereumAccount}
-                                stellarAccount={stellarAccount}
-                            />
-                            <BridgeInfo />
-                        </div>
-                    </TabsContent>
-                </Tabs>
+                {/* Main Content */}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    {/* Left Column */}
+                    <div className="lg:col-span-2 space-y-6">
+                        <motion.div
+                            variants={item}
+                            initial="hidden"
+                            animate="show"
+                            transition={{ delay: 0.3 }}
+                        >
+                            <BalanceOverviewCard />
+                        </motion.div>
+
+                        <motion.div
+                            variants={item}
+                            initial="hidden"
+                            animate="show"
+                            transition={{ delay: 0.4 }}
+                        >
+                            <RecentTransactionsCard />
+                        </motion.div>
+                    </div>
+
+                    {/* Right Column */}
+                    <div className="space-y-6">
+                        <motion.div
+                            variants={item}
+                            initial="hidden"
+                            animate="show"
+                            transition={{ delay: 0.5 }}
+                        >
+                            <QuickTransferCard />
+                        </motion.div>
+
+                        <motion.div
+                            variants={item}
+                            initial="hidden"
+                            animate="show"
+                            transition={{ delay: 0.6 }}
+                        >
+                            <CurrencyRatesCard />
+                        </motion.div>
+
+                        <motion.div
+                            variants={item}
+                            initial="hidden"
+                            animate="show"
+                            transition={{ delay: 0.7 }}
+                        >
+                            <ActivityCard />
+                        </motion.div>
+                    </div>
+                </div>
             </div>
-        </div>
+        </DashboardLayout>
     );
 };
 
